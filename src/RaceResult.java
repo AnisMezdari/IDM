@@ -1,12 +1,16 @@
 
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
 
 
 public class RaceResult {
@@ -14,33 +18,32 @@ public class RaceResult {
 	private HashMap<String, TimeDuration> candidatesResult = new HashMap<>();
 	
 	
-
-	
 	public void onNewResult(String tagNumber, TimeDuration resultTime) {
 		candidatesResult.put(tagNumber, resultTime);
 	}
 	
 	
-	public static HashMap<String, TimeDuration> SortHashMap(Map<String, TimeDuration> hmap){
-        List<Map.Entry<String, TimeDuration>> list =
-           new LinkedList<Map.Entry<String, TimeDuration>>( hmap.entrySet() );
-        Collections.sort( list, new Comparator<Map.Entry<String, TimeDuration>>(){
-           public int compare
-           (Map.Entry<String, TimeDuration>o1, Map.Entry<String, TimeDuration> o2 )
-           {
-              return (o1.getKey()).compareTo( o2.getKey() );
-           }
-        });
+	public void printResult() {
 
+		List<TimeDuration> valueSorted =  new ArrayList<TimeDuration>(candidatesResult.values());
+		Collections.sort(valueSorted);
+		for(TimeDuration item : valueSorted) {
+			
+			Set<String> key = RaceResult.getKeysByValue(candidatesResult,item );
+			System.out.println(key.iterator().next() + " " + item.toString());
+		}		
+	}
 
-        HashMap<String, TimeDuration> hmapTriee = new LinkedHashMap<String, TimeDuration>();
-        for (Map.Entry<String, TimeDuration> entry : list)
-        {
-            hmapTriee.put( entry.getKey(), entry.getValue() );
-        }
-        return hmapTriee;
-	 }
-
+	public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
+	    Set<T> keys = new HashSet<T>();
+	    for (Entry<T, E> entry : map.entrySet()) {
+	        if (Objects.equals(value, entry.getValue())) {
+	            keys.add(entry.getKey());
+	        }
+	    }
+	    return keys;
+	}
+	
 	  
 	  
    public static void main(String ...args) {
@@ -49,6 +52,7 @@ public class RaceResult {
 	   rs.onNewResult("Kylian jean", new TimeDuration(1500));
 	   rs.onNewResult("dupont et dupont", new TimeDuration(30000));
 
+	   rs.printResult();
 	   
    }
 	

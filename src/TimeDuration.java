@@ -66,11 +66,11 @@ public class TimeDuration implements Comparable<TimeDuration> {
 	@Override
 	public int compareTo(TimeDuration o) {
 
-		if(duration < o.duration ) {
-			return duration;
+		if(duration > o.duration ) {
+			return 1;
+		}else {
+			return -1;
 		}
-		
-		return o.duration ;
 	}
 	
 }
