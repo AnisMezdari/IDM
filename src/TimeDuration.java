@@ -1,4 +1,4 @@
-public class TimeDuration {
+public class TimeDuration implements Comparable<TimeDuration> {
 
 	
 	private int duration;
@@ -52,12 +52,25 @@ public class TimeDuration {
 	}
 	
 	
+	public void Compa
+	
 	public static void main(String[] args) {
 		
 		
 		TimeDuration timeDuration = new TimeDuration(25000);
 		
 		System.out.println(timeDuration.toString());
+	}
+
+
+	@Override
+	public int compareTo(TimeDuration o) {
+
+		if(duration < o.duration ) {
+			return duration;
+		}
+		
+		return o.duration ;
 	}
 	
 }
