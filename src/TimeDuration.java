@@ -52,7 +52,7 @@ public class TimeDuration implements Comparable<TimeDuration> {
 	}
 	
 	
-	public void Compa
+
 	
 	public static void main(String[] args) {
 		
